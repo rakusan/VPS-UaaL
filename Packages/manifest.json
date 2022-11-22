@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.google.ar.core.arfoundation.extensions": "file:/Users/raku/Downloads/arcore-unity-extensions-1.31.0.tgz",
     "com.unity.collab-proxy": "1.17.2",
     "com.unity.feature.ar": "1.0.0",
     "com.unity.feature.development": "1.0.1",
