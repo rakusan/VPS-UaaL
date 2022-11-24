@@ -13,7 +13,6 @@
 		33E8826D292F622F0091C9B3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33E8826B292F622F0091C9B3 /* Main.storyboard */; };
 		33E8826F292F62310091C9B3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33E8826E292F62310091C9B3 /* Assets.xcassets */; };
 		33E88272292F62310091C9B3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33E88270292F62310091C9B3 /* LaunchScreen.storyboard */; };
-		33E8827C292FA9C40091C9B3 /* UnityFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33E8827B292FA9C40091C9B3 /* UnityFramework.framework */; };
 		33E8827D292FA9C40091C9B3 /* UnityFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 33E8827B292FA9C40091C9B3 /* UnityFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		33E88280292FA9E40091C9B3 /* Pods_Unity_iPhone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33E8827F292FA9E40091C9B3 /* Pods_Unity_iPhone.framework */; };
 /* End PBXBuildFile section */
@@ -50,7 +49,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				33E8827C292FA9C40091C9B3 /* UnityFramework.framework in Frameworks */,
 				33E88280292FA9E40091C9B3 /* Pods_Unity_iPhone.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
