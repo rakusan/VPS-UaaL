@@ -13,7 +13,24 @@
 		33E8826D292F622F0091C9B3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33E8826B292F622F0091C9B3 /* Main.storyboard */; };
 		33E8826F292F62310091C9B3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33E8826E292F62310091C9B3 /* Assets.xcassets */; };
 		33E88272292F62310091C9B3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33E88270292F62310091C9B3 /* LaunchScreen.storyboard */; };
+		33E8827C292FA9C40091C9B3 /* UnityFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33E8827B292FA9C40091C9B3 /* UnityFramework.framework */; };
+		33E8827D292FA9C40091C9B3 /* UnityFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 33E8827B292FA9C40091C9B3 /* UnityFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		33E88280292FA9E40091C9B3 /* Pods_Unity_iPhone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33E8827F292FA9E40091C9B3 /* Pods_Unity_iPhone.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		33E8827E292FA9C40091C9B3 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				33E8827D292FA9C40091C9B3 /* UnityFramework.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		33E88262292F622F0091C9B3 /* VPS-UaaL-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "VPS-UaaL-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -24,6 +41,8 @@
 		33E8826E292F62310091C9B3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		33E88271292F62310091C9B3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		33E88273292F62310091C9B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		33E8827B292FA9C40091C9B3 /* UnityFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = UnityFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		33E8827F292FA9E40091C9B3 /* Pods_Unity_iPhone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_Unity_iPhone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +50,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				33E8827C292FA9C40091C9B3 /* UnityFramework.framework in Frameworks */,
+				33E88280292FA9E40091C9B3 /* Pods_Unity_iPhone.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -42,6 +63,7 @@
 			children = (
 				33E88264292F622F0091C9B3 /* VPS-UaaL-ios */,
 				33E88263292F622F0091C9B3 /* Products */,
+				33E8827A292FA9C40091C9B3 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -67,6 +89,15 @@
 			path = "VPS-UaaL-ios";
 			sourceTree = "<group>";
 		};
+		33E8827A292FA9C40091C9B3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				33E8827F292FA9E40091C9B3 /* Pods_Unity_iPhone.framework */,
+				33E8827B292FA9C40091C9B3 /* UnityFramework.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -77,6 +108,7 @@
 				33E8825E292F622F0091C9B3 /* Sources */,
 				33E8825F292F622F0091C9B3 /* Frameworks */,
 				33E88260292F622F0091C9B3 /* Resources */,
+				33E8827E292FA9C40091C9B3 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
