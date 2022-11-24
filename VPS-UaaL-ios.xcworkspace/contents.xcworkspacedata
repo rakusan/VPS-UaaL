@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workspace
    version = "1.0">
+   <FileRef
+      location = "group:VPS-UaaL-ios/VPS-UaaL-ios.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:iosBuild/Unity-iPhone.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:iosBuild/Pods/Pods.xcodeproj">
+   </FileRef>
 </Workspace>
