@@ -10,6 +10,10 @@ import UnityFramework
 
 class ViewController: UIViewController, UnityFrameworkListener {
 
+    private var infoTextView: UITextView?
+    private var snackBarTextView: UITextView?
+    private var debugTextView: UITextView?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -22,6 +26,12 @@ class ViewController: UIViewController, UnityFrameworkListener {
 
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         ufw.runEmbedded(withArgc: CommandLine.argc, argv: CommandLine.unsafeArgv, appLaunchOpts: appDelegate.appLaunchOpts)
+
+        if let view = ufw.appController()?.rootView {
+            infoTextView = createTextView(view, CGRectMake(150, 50, view.frame.width - 150, 120))
+            snackBarTextView = createTextView(view, CGRectMake(10, view.frame.height - 120, view.frame.width - 20, 100))
+            debugTextView = createTextView(view, CGRectMake(150, view.frame.height - 350, view.frame.width - 150, 200))
+        }
     }
 
     private func loadUnityFramework() -> UnityFramework {
@@ -38,6 +48,15 @@ class ViewController: UIViewController, UnityFrameworkListener {
             ufw.setExecuteHeader(&header)
         }
         return ufw
+    }
+
+    private func createTextView(_ view: UIView, _ frame: CGRect) -> UITextView {
+        let textView = UITextView()
+        textView.frame = frame
+        textView.textColor = .white
+        textView.backgroundColor = UIColor(white: 0, alpha: 0.5)
+        view.addSubview(textView)
+        return textView
     }
 }
 
