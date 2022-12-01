@@ -21,10 +21,33 @@ namespace Google.XR.ARCoreExtensions.Samples.Geospatial
 {
     using System;
     using System.Collections.Generic;
+    using System.Runtime.InteropServices;
     using UnityEngine;
     using UnityEngine.UI;
     using UnityEngine.XR.ARFoundation;
     using UnityEngine.XR.ARSubsystems;
+
+    #if UNITY_IOS || UNITY_TVOS
+    public class NativeAPI {
+        [DllImport("__Internal")]
+        public static extern void updateInfoText(string infoText);
+
+        [DllImport("__Internal")]
+        public static extern void updateSnackBarText(string snackBarText);
+
+        [DllImport("__Internal")]
+        public static extern void updateDebugText(string debugText);
+
+        [DllImport("__Internal")]
+        public static extern void clearAllButtonSetActive(bool active);
+
+        [DllImport("__Internal")]
+        public static extern void setAnchorButtonSetActive(bool active);
+
+        [DllImport("__Internal")]
+        public static extern void debugTextSetActive(bool active);
+    }
+    #endif
 
     /// <summary>
     /// Controller for Geospatial sample.
@@ -74,36 +97,6 @@ namespace Google.XR.ARCoreExtensions.Samples.Geospatial
         /// UI element containing all AR view contents.
         /// </summary>
         public GameObject ARViewCanvas;
-
-        /// <summary>
-        /// UI element for clearing all anchors, including history.
-        /// </summary>
-        public Button ClearAllButton;
-
-        /// <summary>
-        /// UI element for adding a new anchor at current location.
-        /// </summary>
-        public Button SetAnchorButton;
-
-        /// <summary>
-        /// UI element to display information at runtime.
-        /// </summary>
-        public GameObject InfoPanel;
-
-        /// <summary>
-        /// Text displaying <see cref="GeospatialPose"/> information at runtime.
-        /// </summary>
-        public Text InfoText;
-
-        /// <summary>
-        /// Text displaying in a snack bar at the bottom of the screen.
-        /// </summary>
-        public Text SnackBarText;
-
-        /// <summary>
-        /// Text displaying debug information, only activated in debug build.
-        /// </summary>
-        public Text DebugText;
 
         /// <summary>
         /// Help message shows while localizing.
@@ -208,8 +201,8 @@ namespace Google.XR.ARCoreExtensions.Samples.Geospatial
 
             _anchorObjects.Clear();
             _historyCollection.Collection.Clear();
-            SnackBarText.text = "Anchor(s) cleared!";
-            ClearAllButton.gameObject.SetActive(false);
+            NativeAPI.updateSnackBarText("Anchor(s) cleared!");
+            NativeAPI.clearAllButtonSetActive(false);
             SaveGeospatialAnchorHistory();
         }
 
@@ -224,14 +217,14 @@ namespace Google.XR.ARCoreExtensions.Samples.Geospatial
             if (PlaceGeospatialAnchor(history))
             {
                 _historyCollection.Collection.Add(history);
-                SnackBarText.text = $"{_anchorObjects.Count} Anchor(s) Set!";
+                NativeAPI.updateSnackBarText($"{_anchorObjects.Count} Anchor(s) Set!");
             }
             else
             {
-                SnackBarText.text = "Failed to set an anchor!";
+                NativeAPI.updateSnackBarText("Failed to set an anchor!");
             }
 
-            ClearAllButton.gameObject.SetActive(_historyCollection.Collection.Count > 0);
+            NativeAPI.clearAllButtonSetActive(_historyCollection.Collection.Count > 0);
             SaveGeospatialAnchorHistory();
         }
 
@@ -276,14 +269,13 @@ namespace Google.XR.ARCoreExtensions.Samples.Geospatial
 
             _isReturning = false;
             _enablingGeospatial = false;
-            InfoPanel.SetActive(false);
-            SetAnchorButton.gameObject.SetActive(false);
-            ClearAllButton.gameObject.SetActive(false);
-            DebugText.gameObject.SetActive(Debug.isDebugBuild && EarthManager != null);
+            NativeAPI.setAnchorButtonSetActive(false);
+            NativeAPI.clearAllButtonSetActive(false);
+            NativeAPI.debugTextSetActive(Debug.isDebugBuild && EarthManager != null);
 
             _localizationPassedTime = 0f;
             _isLocalizing = true;
-            SnackBarText.text = _localizingMessage;
+            NativeAPI.updateSnackBarText(_localizingMessage);
 
 #if UNITY_IOS
             Debug.Log("Start location services.");
@@ -402,8 +394,8 @@ namespace Google.XR.ARCoreExtensions.Samples.Geospatial
                 {
                     _isLocalizing = true;
                     _localizationPassedTime = 0f;
-                    SetAnchorButton.gameObject.SetActive(false);
-                    ClearAllButton.gameObject.SetActive(false);
+                    NativeAPI.setAnchorButtonSetActive(false);
+                    NativeAPI.clearAllButtonSetActive(false);
                     foreach (var go in _anchorObjects)
                     {
                         go.SetActive(false);
@@ -418,7 +410,7 @@ namespace Google.XR.ARCoreExtensions.Samples.Geospatial
                 else
                 {
                     _localizationPassedTime += Time.deltaTime;
-                    SnackBarText.text = _localizationInstructionMessage;
+                    NativeAPI.updateSnackBarText(_localizationInstructionMessage);
                 }
             }
             else if (_isLocalizing)
@@ -426,9 +418,9 @@ namespace Google.XR.ARCoreExtensions.Samples.Geospatial
                 // Finished localization.
                 _isLocalizing = false;
                 _localizationPassedTime = 0f;
-                SetAnchorButton.gameObject.SetActive(true);
-                ClearAllButton.gameObject.SetActive(_anchorObjects.Count > 0);
-                SnackBarText.text = _localizationSuccessMessage;
+                NativeAPI.setAnchorButtonSetActive(true);
+                NativeAPI.clearAllButtonSetActive(_anchorObjects.Count > 0);
+                NativeAPI.updateSnackBarText(_localizationSuccessMessage);
                 foreach (var go in _anchorObjects)
                 {
                     go.SetActive(true);
@@ -437,10 +429,10 @@ namespace Google.XR.ARCoreExtensions.Samples.Geospatial
                 ResolveHistory();
             }
 
-            InfoPanel.SetActive(true);
+            string infoText;
             if (earthTrackingState == TrackingState.Tracking)
             {
-                InfoText.text = string.Format(
+                infoText = string.Format(
                 "Latitude/Longitude: {1}°, {2}°{0}" +
                 "Horizontal Accuracy: {3}m{0}" +
                 "Altitude: {4}m{0}" +
@@ -458,8 +450,9 @@ namespace Google.XR.ARCoreExtensions.Samples.Geospatial
             }
             else
             {
-                InfoText.text = "GEOSPATIAL POSE: not tracking";
+                infoText = "GEOSPATIAL POSE: not tracking";
             }
+            NativeAPI.updateInfoText(infoText);
         }
 
         private bool PlaceGeospatialAnchor(GeospatialAnchorHistory history)
@@ -491,9 +484,9 @@ namespace Google.XR.ARCoreExtensions.Samples.Geospatial
                 PlaceGeospatialAnchor(history);
             }
 
-            ClearAllButton.gameObject.SetActive(_historyCollection.Collection.Count > 0);
-            SnackBarText.text = string.Format("{0} anchor(s) set from history.",
-                _anchorObjects.Count);
+            NativeAPI.clearAllButtonSetActive(_historyCollection.Collection.Count > 0);
+            NativeAPI.updateSnackBarText(string.Format("{0} anchor(s) set from history.",
+                _anchorObjects.Count));
         }
 
         private void LoadGeospatialAnchorHistory()
@@ -603,12 +596,11 @@ namespace Google.XR.ARCoreExtensions.Samples.Geospatial
                 return;
             }
 
-            SetAnchorButton.gameObject.SetActive(false);
-            ClearAllButton.gameObject.SetActive(false);
-            InfoPanel.SetActive(false);
+            NativeAPI.setAnchorButtonSetActive(false);
+            NativeAPI.clearAllButtonSetActive(false);
 
             Debug.LogError(reason);
-            SnackBarText.text = reason;
+            NativeAPI.updateSnackBarText(reason);
             // _isReturning = true;
             // Invoke(nameof(QuitApplication), _errorDisplaySeconds);
         }
@@ -629,7 +621,7 @@ namespace Google.XR.ARCoreExtensions.Samples.Geospatial
                 EarthManager.EarthTrackingState == TrackingState.Tracking ?
                 EarthManager.CameraGeospatialPose : new GeospatialPose();
             var supported = EarthManager.IsGeospatialModeSupported(GeospatialMode.Enabled);
-            DebugText.text =
+            NativeAPI.updateDebugText(
                 $"IsReturning: {_isReturning}\n" +
                 $"IsLocalizing: {_isLocalizing}\n" +
                 $"SessionState: {ARSession.state}\n" +
@@ -642,7 +634,8 @@ namespace Google.XR.ARCoreExtensions.Samples.Geospatial
                 $"  ALT: {pose.Altitude:F2}\n" +
                 $"  VerticalAcc: {pose.VerticalAccuracy:F2}\n" +
                 $"  Heading: {pose.Heading:F2}\n" +
-                $"  HeadingAcc: {pose.HeadingAccuracy:F2}";
+                $"  HeadingAcc: {pose.HeadingAccuracy:F2}"
+            );
         }
     }
 }

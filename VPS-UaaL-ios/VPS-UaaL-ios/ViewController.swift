@@ -8,7 +8,7 @@
 import UIKit
 import UnityFramework
 
-class ViewController: UIViewController, UnityFrameworkListener {
+class ViewController: UIViewController, UnityFrameworkListener, NativeCallsProtocol {
 
     private var ufw: UnityFramework!
 
@@ -29,6 +29,7 @@ class ViewController: UIViewController, UnityFrameworkListener {
         ufw = loadUnityFramework()
         ufw.setDataBundleId("com.unity3d.framework")
         ufw.register(self)
+        NSClassFromString("FrameworkLibAPI")?.registerAPIforNativeCalls(self)
 
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         ufw.runEmbedded(withArgc: CommandLine.argc, argv: CommandLine.unsafeArgv, appLaunchOpts: appDelegate.appLaunchOpts)
@@ -66,6 +67,7 @@ class ViewController: UIViewController, UnityFrameworkListener {
         textView.frame = frame
         textView.textColor = .white
         textView.backgroundColor = UIColor(white: 0, alpha: 0.5)
+        textView.isEditable = false
         parent.addSubview(textView)
         return textView
     }
@@ -88,6 +90,30 @@ class ViewController: UIViewController, UnityFrameworkListener {
 
     private func setAnchor() {
         ufw.sendMessageToGO(withName: "GeospatialController", functionName: "OnSetAnchorClicked", message: "")
+    }
+
+    func updateInfoText(_ infoText: String!) {
+        infoTextView.text = infoText
+    }
+
+    func updateSnackBarText(_ snackBarText: String!) {
+        snackBarTextView.text = snackBarText
+    }
+
+    func updateDebugText(_ debugText: String!) {
+        debugTextView.text = debugText
+    }
+
+    func clearAllButtonSetActive(_ active: Bool) {
+        clearAllButton.isHidden = !active
+    }
+
+    func setAnchorButtonSetActive(_ active: Bool) {
+        setAnchorButton.isHidden = !active
+    }
+
+    func debugTextSetActive(_ active: Bool) {
+        debugTextView.isHidden = !active
     }
 }
 
