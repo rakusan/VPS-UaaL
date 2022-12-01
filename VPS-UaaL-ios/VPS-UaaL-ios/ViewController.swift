@@ -10,12 +10,14 @@ import UnityFramework
 
 class ViewController: UIViewController, UnityFrameworkListener {
 
-    private var infoTextView: UITextView?
-    private var snackBarTextView: UITextView?
-    private var debugTextView: UITextView?
+    private var ufw: UnityFramework!
 
-    private var clearAllButton: UIButton?
-    private var setAnchorButton: UIButton?
+    private var infoTextView: UITextView!
+    private var snackBarTextView: UITextView!
+    private var debugTextView: UITextView!
+
+    private var clearAllButton: UIButton!
+    private var setAnchorButton: UIButton!
 
 
     override func viewDidLoad() {
@@ -24,7 +26,7 @@ class ViewController: UIViewController, UnityFrameworkListener {
     }
 
     @IBAction func startUnity(_ sender: Any) {
-        let ufw = loadUnityFramework()
+        ufw = loadUnityFramework()
         ufw.setDataBundleId("com.unity3d.framework")
         ufw.register(self)
 
@@ -37,9 +39,9 @@ class ViewController: UIViewController, UnityFrameworkListener {
             debugTextView = createTextView(parent: view, frame: CGRectMake(150, view.frame.height - 350, view.frame.width - 150, 200))
 
             clearAllButton = createButton(parent: view, frame: CGRectMake(10, view.frame.height - 200, 120, 50),
-                                          title: "CLEAR ALL ANCHORS", numberOfLines: 2) { /* TODO */ }
+                                          title: "CLEAR ALL ANCHORS", numberOfLines: 2) { self.clearAllAnchors() }
             setAnchorButton = createButton(parent: view, frame: CGRectMake(10, view.frame.height - 260, 120, 50),
-                                           title: "SET ANCHOR") { /* TODO */ }
+                                           title: "SET ANCHOR") { self.setAnchor() }
         }
     }
 
@@ -78,6 +80,14 @@ class ViewController: UIViewController, UnityFrameworkListener {
         button.titleLabel?.numberOfLines = numberOfLines
         parent.addSubview(button)
         return button
+    }
+
+    private func clearAllAnchors() {
+        ufw.sendMessageToGO(withName: "GeospatialController", functionName: "OnClearAllClicked", message: "")
+    }
+
+    private func setAnchor() {
+        ufw.sendMessageToGO(withName: "GeospatialController", functionName: "OnSetAnchorClicked", message: "")
     }
 }
 
