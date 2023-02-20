@@ -34,8 +34,8 @@ Edit -> Project Settings -> ARCore Extensions の順で設定画面を開いてA
 
 ### Xcodeプロジェクトの設定
 ```VPS-UaaL/VPS-UaaL-ios.xcworkspace```をXcodeで開き、次の設定をします。
-- ```Unity-iPhone/Libraries/Plugins/iOS/NativeCallProxy.h```のTarget MembershipでUnityFrameworkを選択し、Publicにする。
-- ```Unity-iPhone/Data```のTarget MembershipでUnityFrameworkを選択する。
+- ```Unity-iPhone/Libraries/Plugins/iOS/NativeCallProxy.h```のTarget MembershipでUnityFrameworkを選択し、Publicにします。
+- ```Unity-iPhone/Data```のTarget MembershipでUnityFrameworkを選択します。
 - ```Pods```の Build Settings で Enable Bitcode を Yes にします。
 
 ### Xcodeプロジェクトのビルド
