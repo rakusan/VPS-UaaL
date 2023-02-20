@@ -31,3 +31,12 @@ Edit -> Project Settings -> ARCore Extensions の順で設定画面を開いてA
 ### Unityプロジェクトのビルド
 ビルドします。ビルドの出力ディレクトリは ```VPS-UaaL/iosBuild``` とします。  
 <img src="docs/images/unity_build_dir.png" width="50%">
+
+### Xcodeプロジェクトの設定
+```VPS-UaaL/VPS-UaaL-ios.xcworkspace```をXcodeで開き、次の設定をします。
+- ```Unity-iPhone/Libraries/Plugins/iOS/NativeCallProxy.h```のTarget MembershipでUnityFrameworkを選択し、Publicにする。
+- ```Unity-iPhone/Data```のTarget MembershipでUnityFrameworkを選択する。
+- ```Pods```の Build Settings で Enable Bitcode を Yes にします。
+
+### Xcodeプロジェクトのビルド
+VPS-UaaL-iosをビルドします
