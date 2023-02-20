@@ -21,5 +21,5 @@ https://zenn.dev/tkada/articles/04b44474149130#gcp%E3%81%AE%E8%A8%AD%E5%AE%9A%E3
 
 ### Unityプロジェクトのビルド
 チェックアウトしたリポジトリをUnity Editorで開いてビルドします。  
-ビルドの出力ディレクトリは VPS-UaaL/iosBuild とします。
-
+ビルドの出力ディレクトリは ```VPS-UaaL/iosBuild``` とします。  
+<img src="docs/images/unity_build_dir.png" width="50%">
