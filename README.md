@@ -40,3 +40,6 @@ Edit -> Project Settings -> ARCore Extensions の順で設定画面を開いてA
 
 ### Xcodeプロジェクトのビルド
 VPS-UaaL-iosをビルドします
+
+
+（…まだ書き途中です）
