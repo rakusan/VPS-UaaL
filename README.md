@@ -38,8 +38,14 @@ Edit -> Project Settings -> ARCore Extensions の順で設定画面を開いてA
 - ```Unity-iPhone/Data```のTarget MembershipでUnityFrameworkを選択します。
 - ```Pods```の Build Settings で Enable Bitcode を Yes にします。
 
-### Xcodeプロジェクトのビルド
-VPS-UaaL-iosをビルドします
+### Xcodeプロジェクトのビルドと実行
+VPS-UaaL-iosをビルドし、実行します。
 
+## 画面説明
+### 初期画面
+Startボタンだけが画面中央にあります。それを押すとアプリ内でUaaLが起動し、ARCore Geospatial APIのサンプルシーンが開始します。
 
-（…まだ書き途中です）
+### ARCore Geospatial APIのサンプルシーン
+（場所の特定を防ぐために画像は加工してあります）<br>
+<img src="docs/images/geospatial_uaal.jpeg" width="25%"><br>
+カメラの映像（とそれを利用するARCore Geospatial APIの処理）はUnity側で動いています。その上に乗っているUIはiOSネイティブのものになっています。ARCore Geospatial APIのサンプルシーンの元のコードではUIも全てUnity側で動く点が異なります。
