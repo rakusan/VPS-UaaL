@@ -49,3 +49,5 @@ Startボタンだけが画面中央にあります。それを押すとアプリ
 （場所の特定を防ぐために画像は加工してあります）<br>
 <img src="docs/images/geospatial_uaal.jpeg" width="25%"><br>
 カメラの映像（とそれを利用するARCore Geospatial APIの処理）はUnity側で動いています。その上に乗っているUIはiOSネイティブのものになっています。ARCore Geospatial APIのサンプルシーンの元のコードではUIも全てUnity側で動く点が異なります。
+
+SET ANCHOR ボタンを押すと、AR空間上にオブジェクトを配置することができます。
