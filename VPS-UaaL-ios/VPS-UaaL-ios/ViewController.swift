@@ -105,10 +105,9 @@ class ViewController: UIViewController, UnityFrameworkListener, NativeCallsProto
     func updateLocation(_ latitude: Double, _ longitude: Double) {
         let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
 
-        if let annotation = mapView.annotations.first as? MKPointAnnotation {
+        if let annotation = mapView.annotations.first(where: { $0 is MKPointAnnotation }) as? MKPointAnnotation {
             annotation.coordinate = coordinate
         } else {
-            mapView.removeAnnotations(mapView.annotations)
             let annotation = MKPointAnnotation()
             annotation.coordinate = coordinate
             mapView.addAnnotation(annotation)
