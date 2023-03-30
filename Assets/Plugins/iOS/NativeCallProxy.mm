@@ -19,6 +19,11 @@ void updateInfoText(const char* infoText)
     return [api updateInfoText:[NSString stringWithUTF8String:infoText]];
 }
 
+void updateLocation(double latitude, double longitude)
+{
+    return [api updateLocation:latitude :longitude];
+}
+
 void updateSnackBarText(const char* snackBarText)
 {
     return [api updateSnackBarText:[NSString stringWithUTF8String:snackBarText]];

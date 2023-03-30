@@ -33,6 +33,9 @@ namespace Google.XR.ARCoreExtensions.Samples.Geospatial
         public static extern void updateInfoText(string infoText);
 
         [DllImport("__Internal")]
+        public static extern void updateLocation(double latitude, double longitude);
+
+        [DllImport("__Internal")]
         public static extern void updateSnackBarText(string snackBarText);
 
         [DllImport("__Internal")]
@@ -447,6 +450,7 @@ namespace Google.XR.ARCoreExtensions.Samples.Geospatial
                 pose.VerticalAccuracy.ToString("F2"),
                 pose.Heading.ToString("F1"),
                 pose.HeadingAccuracy.ToString("F1"));
+                NativeAPI.updateLocation(pose.Latitude, pose.Longitude);
             }
             else
             {

@@ -7,6 +7,7 @@
 @protocol NativeCallsProtocol
 @required
 - (void) updateInfoText:(NSString*)infoText;
+- (void) updateLocation:(double)latitude :(double)longitude;
 - (void) updateSnackBarText:(NSString*)snackBarText;
 - (void) updateDebugText:(NSString*)debugText;
 - (void) clearAllButtonSetActive:(bool)active;

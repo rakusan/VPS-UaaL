@@ -6,18 +6,20 @@
 //
 
 import UIKit
+import MapKit
 import UnityFramework
 
 class ViewController: UIViewController, UnityFrameworkListener, NativeCallsProtocol {
 
     private var ufw: UnityFramework!
 
+    private var mapView: MKMapView!
     private var infoTextView: UITextView!
     private var snackBarTextView: UITextView!
-    private var debugTextView: UITextView!
+    //private var debugTextView: UITextView!
 
-    private var clearAllButton: UIButton!
-    private var setAnchorButton: UIButton!
+    //private var clearAllButton: UIButton!
+    //private var setAnchorButton: UIButton!
 
 
     override func viewDidLoad() {
@@ -35,14 +37,18 @@ class ViewController: UIViewController, UnityFrameworkListener, NativeCallsProto
         ufw.runEmbedded(withArgc: CommandLine.argc, argv: CommandLine.unsafeArgv, appLaunchOpts: appDelegate.appLaunchOpts)
 
         if let view = ufw.appController()?.rootView {
-            infoTextView = createTextView(parent: view, frame: CGRectMake(150, 50, view.frame.width - 150, 120))
-            snackBarTextView = createTextView(parent: view, frame: CGRectMake(10, view.frame.height - 120, view.frame.width - 20, 100))
-            debugTextView = createTextView(parent: view, frame: CGRectMake(150, view.frame.height - 350, view.frame.width - 150, 200))
+            mapView = MKMapView(frame: CGRect(x: 0, y: view.frame.height/3*2, width: view.frame.width, height: view.frame.height/3))
+            mapView.userTrackingMode = MKUserTrackingMode.followWithHeading
+            view.addSubview(mapView)
 
-            clearAllButton = createButton(parent: view, frame: CGRectMake(10, view.frame.height - 200, 120, 50),
-                                          title: "CLEAR ALL ANCHORS", numberOfLines: 2) { self.clearAllAnchors() }
-            setAnchorButton = createButton(parent: view, frame: CGRectMake(10, view.frame.height - 260, 120, 50),
-                                           title: "SET ANCHOR") { self.setAnchor() }
+            infoTextView = createTextView(parent: view, frame: CGRectMake(150, 50, view.frame.width - 150, 120))
+            snackBarTextView = createTextView(parent: view, frame: CGRectMake(10, view.frame.height - 45, view.frame.width - 20, 25))
+            //debugTextView = createTextView(parent: view, frame: CGRectMake(150, view.frame.height - 350, view.frame.width - 150, 200))
+
+            //clearAllButton = createButton(parent: view, frame: CGRectMake(10, view.frame.height - 200, 120, 50),
+            //                              title: "CLEAR ALL ANCHORS", numberOfLines: 2) { self.clearAllAnchors() }
+            //setAnchorButton = createButton(parent: view, frame: CGRectMake(10, view.frame.height - 260, 120, 50),
+            //                               title: "SET ANCHOR") { self.setAnchor() }
         }
     }
 
@@ -96,24 +102,37 @@ class ViewController: UIViewController, UnityFrameworkListener, NativeCallsProto
         infoTextView.text = infoText
     }
 
+    func updateLocation(_ latitude: Double, _ longitude: Double) {
+        let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+
+        if let annotation = mapView.annotations.first as? MKPointAnnotation {
+            annotation.coordinate = coordinate
+        } else {
+            mapView.removeAnnotations(mapView.annotations)
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = coordinate
+            mapView.addAnnotation(annotation)
+        }
+    }
+
     func updateSnackBarText(_ snackBarText: String!) {
         snackBarTextView.text = snackBarText
     }
 
     func updateDebugText(_ debugText: String!) {
-        debugTextView.text = debugText
+        //debugTextView.text = debugText
     }
 
     func clearAllButtonSetActive(_ active: Bool) {
-        clearAllButton.isHidden = !active
+        //clearAllButton.isHidden = !active
     }
 
     func setAnchorButtonSetActive(_ active: Bool) {
-        setAnchorButton.isHidden = !active
+        //setAnchorButton.isHidden = !active
     }
 
     func debugTextSetActive(_ active: Bool) {
-        debugTextView.isHidden = !active
+        //debugTextView.isHidden = !active
     }
 }
 
